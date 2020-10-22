@@ -17,9 +17,10 @@ public class IMExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<?> handleExceptions(Exception ex, WebRequest request) {
+        log.info("ControllerAdvice -> ExceptionHandler -> " ,ex,request);
         java.util.Date uDate = new java.util.Date();
         java.sql.Date sDate = new java.sql.Date(uDate.getTime());
-        ExceptionResponse  exceptionResponse = new ExceptionResponse(sDate, ex.getMessage());
-        return new ResponseEntity<>(exceptionResponse , HttpStatus.EXPECTATION_FAILED);
+        ExceptionResponse exceptionResponse = new ExceptionResponse(sDate, ex.getMessage());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.EXPECTATION_FAILED);
     }
 }

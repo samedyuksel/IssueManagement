@@ -10,7 +10,6 @@ import java.util.Date;
 @Data
 @ApiModel(value = "Issue History Data Transfer Object")
 public class IssueHistoryDto {
-
     @ApiModelProperty(required = true,value = "ID")
     private Long id;
     @ApiModelProperty(required = true,value = "Issue")
