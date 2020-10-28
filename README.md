@@ -1,2 +1,2 @@
 # Issue Management
-This is a Spring boot backend project.
+This is a Full-Stack Spring boot and Angular project.
