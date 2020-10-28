@@ -1,8 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AppLayoutComponent} from './_layout/app-layout/app-layout.component';
-
-
+import {NotfoundComponent} from "./shared/notfound/notfound.component";
 
 const routes: Routes = [
   {
@@ -14,6 +13,7 @@ const routes: Routes = [
       {path: 'project', loadChildren: './pages/project/project.module#ProjectModule'}
     ]
   },
+  {path: '**', component: NotfoundComponent,}
 
 ];
 

@@ -15,9 +15,11 @@ import javax.validation.constraints.NotNull;
 public class ProjectDto {
     @ApiModelProperty(value = "Project ID")
     private Long id;
+
     @javax.validation.constraints.NotNull
     @ApiModelProperty(required = true,value = "Name Of Project")
     private String projectName;
+
     @javax.validation.constraints.NotNull
     @ApiModelProperty(required = true,value = "Code Of Project")
     private String projectCode;

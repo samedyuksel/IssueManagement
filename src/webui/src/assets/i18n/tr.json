@@ -4,5 +4,8 @@
   "Project Name is required": "Proje Adı zorunludur",
   "Project Name should be (min) 4 char":"Proje Adı en az 4 karakter olmalı",
   "Project Code":"Proje Kodu",
-  "Project Name":"Proje Adı"
+  "Project Name":"Proje Adı",
+  "New Project": "Yeni Proje",
+  "Yes": "Evet",
+  "No": "Hayır"
 }

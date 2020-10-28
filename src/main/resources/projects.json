@@ -1,32 +1,44 @@
 [
   {
     "_class": "com.smdyksl.issuemanagement.entity.Project",
-    "projectCode" : "IM 5",
-    "projectName": "Issue Management Project 5"
+    "projectCode" : "IM 4",
+    "projectName": "Issue Management Project 4"
   },
   {
     "_class": "com.smdyksl.issuemanagement.entity.Project",
-    "projectCode" : "ERP-S 5",
-    "projectName": "ERP Project for Sales 5"
+    "projectCode" : "ERP-S 4",
+    "projectName": "ERP Project for Sales 4"
   },
   {
     "_class": "com.smdyksl.issuemanagement.entity.Project",
-    "projectCode" : "CRM-S 5",
-    "projectName": "CRM Project for Sales 5"
+    "projectCode" : "CRM-S 4",
+    "projectName": "CRM Project for Sales 4"
   },
   {
     "_class": "com.smdyksl.issuemanagement.entity.Project",
-    "projectCode" : "CRM-B 5",
-    "projectName": "CRM Project for Bussiness 5"
+    "projectCode" : "CRM-B 4",
+    "projectName": "CRM Project for Bussiness 4"
   },
   {
     "_class": "com.smdyksl.issuemanagement.entity.Project",
-    "projectCode" : "ERP-B 5",
-    "projectName": "ERP Project for Bussiness 5"
+    "projectCode" : "ERP-B 4",
+    "projectName": "ERP Project for Bussiness 4"
   },
   {
     "_class": "com.smdyksl.issuemanagement.entity.Project",
-    "projectCode" : "TP 5",
-    "projectName": "Test Project 5"
+    "projectCode" : "TP 4",
+    "projectName": "Test Project 4"
+  },
+  {
+    "_class": "com.smdyksl.issuemanagement.entity.User",
+    "username" : "smdyksl",
+    "nameSurname": "Samed Yuksel",
+    "email":"smdyksl96@gmail.com"
+  },
+  {
+    "_class": "com.smdyksl.issuemanagement.entity.User",
+    "username" : "user",
+    "nameSurname": "Johny Lesh",
+    "email":"user@gmail.com"
   }
 ]

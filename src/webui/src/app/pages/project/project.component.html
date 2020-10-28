@@ -16,16 +16,65 @@
     (page)="setPage($event)">
   </ngx-datatable>
 
-  <button type="button" class="btn btn-primary" (click)="openModal(template)">Create template modal</button>
+  <ng-template #tplProjectDeleteCell let-row="row" let-value="value">
+    <button type="button" class="btn" (click)="showProjectDeleteConfirmation(value)"><i class="material-icons">delete_forever</i></button>
+  </ng-template>
+
+  <div>
+  <button type="button" class="btn btn-primary" (click)="openModal(template)">{{'New Project' | translate}}</button>
+  </div>
+
   <ng-template #template>
     <div class="modal-header">
-      <h4 class="modal-title pull-left">Modal</h4>
+      <h4 class="modal-title pull-left">{{'Project Detail' | translate }}</h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      This is a modal.
+      <form [formGroup]="projectForm" (ngSubmit)="saveProject()">
+
+
+        <!-- Project Code Edit -->
+        <div class="form-group">
+          <label>{{'Project Code'| translate}}</label>
+
+          <input type="text" formControlName="projectCode" class="form-control" [ngClass]="{ 'is-invalid': f.projectCode.errors }" />
+          <div *ngIf="f.projectCode.errors" class="invalid-feedback">
+            <div *ngIf="f.projectCode.errors.required">{{'Project Code is required'| translate}}</div>
+            <div *ngIf="f.projectCode.errors.minlength">{{'Project Code should be (min) 2 char'| translate}}</div>
+          </div>
+        </div>
+        <!-- Project Name Edit -->
+        <div class="form-group">
+          <label>{{'Project Name'| translate}}</label>
+
+          <input type="text" formControlName="projectName" class="form-control" [ngClass]="{ 'is-invalid': f.projectName.errors }" />
+          <div *ngIf="f.projectName.errors" class="invalid-feedback">
+            <div *ngIf="f.projectName.errors.required">{{'Project Name is required'| translate}}</div>
+            <div *ngIf="f.projectName.errors.minlength">{{'Project Name should be (min) 4 char'| translate}}</div>
+          </div>
+        </div>
+        <!-- Project Manager Edit -->
+        <div class="form-group">
+          <label>{{'Project Manager'| translate}}</label>
+
+          <select formControlName="managerId" class="form-control" [ngClass]="{ 'is-invalid': f.managerId.errors }">
+            <option *ngFor="let opt of managerOptions" [value]="opt.id">{{opt.nameSurname}}</option>
+          </select>
+          <div *ngIf="f.managerId.errors" class="invalid-feedback">
+            <div *ngIf="f.managerId.errors.required">{{'Project Manager is required'| translate}}</div>
+          </div>
+        </div>
+
+        <!-- Save or Close -->
+        <div class="modal-footer" >
+          <button class="btn btn-light" (click)="closeAndResetModal()">{{ 'Close' | translate }}</button>
+          <button class="btn btn-primary" >{{ 'Save' | translate }}</button>
+        </div>
+
+
+      </form>
     </div>
   </ng-template>
 

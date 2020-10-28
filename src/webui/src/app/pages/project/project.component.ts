@@ -1,7 +1,10 @@
-import {Component, OnInit, TemplateRef} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {ProjectService} from 'src/app/services/shared/project.service';
 import {Page} from "../../common/page";
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import {BsModalService, BsModalRef} from 'ngx-bootstrap/modal';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ConfirmationComponent} from "../../shared/confirmation/confirmation.component";
+import {UserService} from "../../services/shared/user.service";
 
 
 @Component({
@@ -11,33 +14,91 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class ProjectComponent implements OnInit {
 
-  page = new Page();
-  cols = [
-    {prop: 'id', name:'No'},
-    {prop: 'projectName', name:'Project Name', sortable: true},
-    {prop: 'projectCode', name:'Project Code', sortable: false},
-  ];
-  rows = [];
 
   modalRef: BsModalRef;
-    constructor(private projectService: ProjectService, private modalService: BsModalService) {}
+  projectForm: FormGroup;
+  @ViewChild('tplProjectDeleteCell') tplProjectDeleteCell: TemplateRef<any>;
 
-  ngOnInit(){
-      this.setPage({offset: 0});
+  page = new Page();
+  cols = [];
+  rows = [];
+  managerOptions = [];
+
+
+  constructor(private projectService: ProjectService,
+              private modalService: BsModalService,
+              private formBuilder: FormBuilder,
+              private userService: UserService) {
+  }
+
+  ngOnInit() {
+    this.cols = [
+      {prop: 'id', name: 'No'},
+      {prop: 'projectName', name: 'Project Name', sortable: true},
+      {prop: 'projectCode', name: 'Project Code', sortable: false},
+      {prop: 'manager.nameSurname', name: 'Manager', sortable: true},
+      {prop: 'id', name: 'Actions', cellTemplate: this.tplProjectDeleteCell, flexGrow: 1, sortable: false}
+    ];
+
+    this.setPage({offset: 0});
+
+    this.projectForm = this.formBuilder.group({
+      'projectCode': [null, [Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
+      'projectName': [null, [Validators.required, Validators.minLength(4)]],
+      'managerId': [null, [Validators.required]]
+    });
+
+    this.userService.getAll().subscribe(res => {
+      this.managerOptions = res;
+    });
+  }
+
+  get f() {
+    return this.projectForm.controls;
   }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
 
-  setPage(pageInfo){
-      this.page.page = pageInfo.offset;
-      this.projectService.getAll(this.page).subscribe(pagedData => {
-        this.page.size = pagedData.size;
-        this.page.page = pagedData.page;
-        this.page.totalElements = pagedData.totalElements;
-        this.rows = pagedData.content;
-      })
+  saveProject() {
+    if (!this.projectForm.valid) {
+      return;
+    }
+    this.projectService.createProject(this.projectForm.value).subscribe(response => {
+      this.setPage({offset: 0});
+      this.closeAndResetModal();
+    })
+  }
+
+  closeAndResetModal() {
+    this.projectForm.reset();
+    this.modalRef.hide();
+  }
+
+  setPage(pageInfo) {
+    this.page.page = pageInfo.offset;
+    this.projectService.getAllPageable(this.page).subscribe(pagedData => {
+      this.page.size = pagedData.size;
+      this.page.page = pagedData.page;
+      this.page.totalElements = pagedData.totalElements;
+      this.rows = pagedData.content;
+    })
+  }
+
+  showProjectDeleteConfirmation(value) {
+    const modal = this.modalService.show(ConfirmationComponent);
+    (<ConfirmationComponent>modal.content).showConfirmation('Delete Confirmation', 'Are you sure for delete project?');
+    (<ConfirmationComponent>modal.content).onClose.subscribe(result => {
+      if (result === true) {
+        this.projectService.delete(value).subscribe(response => {
+          if (response) {
+            this.setPage({offset: 0})
+          }
+        });
+      } else if (result === false) {
+      }
+    })
   }
 
 }

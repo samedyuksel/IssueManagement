@@ -105,7 +105,6 @@ public class IssueServiceImpl implements IssueService {
         return true;
     }
 
-
     @Override
     public IssueDto update(Long id, IssueDto project) {
         return null;

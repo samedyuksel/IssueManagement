@@ -1,15 +1,16 @@
 package com.smdyksl.issuemanagement.service;
 
-import com.smdyksl.issuemanagement.entity.User;
-import org.springframework.data.domain.Page;
+import com.smdyksl.issuemanagement.dto.UserDto;
+import com.smdyksl.issuemanagement.util.TPage;
 import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
-    User save(User user);
+    UserDto save(UserDto user);
 
-    User getById(Long id);
-    User getByUsername(String username);
+    UserDto getById(Long id);
 
-    Page<User> getAllPageable(Pageable pageable);
+    TPage<UserDto> getAllPageable(Pageable pageable);
+
+    UserDto getByUsername(String username);
 }

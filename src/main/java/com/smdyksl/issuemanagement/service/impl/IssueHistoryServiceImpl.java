@@ -47,9 +47,9 @@ public class IssueHistoryServiceImpl implements IssueHistoryService {
     @Override
     public TPage<IssueHistoryDto> getAllPageable(Pageable pageable) {
         Page<IssueHistory> data = issueHistoryRepository.findAll(pageable);
-        TPage<IssueHistoryDto> respnose = new TPage<IssueHistoryDto>();
-        respnose.setStat(data, Arrays.asList(modelMapper.map(data.getContent(), IssueHistoryDto[].class)));
-        return respnose;
+        TPage<IssueHistoryDto> response = new TPage<IssueHistoryDto>();
+        response.setStat(data, Arrays.asList(modelMapper.map(data.getContent(), IssueHistoryDto[].class)));
+        return response;
     }
 
     @Override

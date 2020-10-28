@@ -13,6 +13,9 @@ import {ToastNoAnimation, ToastNoAnimationModule, ToastrModule} from "ngx-toastr
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {UserService} from "./services/shared/user.service";
+import {IssueHistoryService} from "./services/shared/issue.history.service";
+import {NotfoundComponent} from "./shared/notfound/notfound.component";
 
 export const createTranslateLoader = (http: HttpClient) => {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -24,7 +27,8 @@ export const createTranslateLoader = (http: HttpClient) => {
     AppLayoutComponent,
     HeaderComponent,
     SidebarComponent,
-    FooterComponent
+    FooterComponent,
+    NotfoundComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +54,7 @@ export const createTranslateLoader = (http: HttpClient) => {
       }
     }),
   ],
-  providers: [ApiService,IssueService,ProjectService],
+  providers: [ApiService,IssueService,ProjectService, UserService, IssueHistoryService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

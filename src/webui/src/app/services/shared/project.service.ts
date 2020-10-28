@@ -13,13 +13,24 @@ export class ProjectService {
   constructor(private apiService: ApiService) {
   }
 
-  getAll(page): Observable<any> {
-    return this.apiService.get(this.PROJECT_PATH + '/pagination',page).pipe(map(
-      res => {
-        if (res) {
+  getAllPageable(page) : Observable<any>{
+    return this.apiService.get(this.PROJECT_PATH+'/pagination',page).pipe(map(
+      res =>{
+        if(res){
           return res;
-        } else {
-          console.log(res);
+        }else{
+          return {};
+        }
+      }
+    ));
+  }
+
+  getAll() : Observable<any>{
+    return this.apiService.get(this.PROJECT_PATH).pipe(map(
+      res =>{
+        if(res){
+          return res;
+        }else{
           return {};
         }
       }
@@ -53,7 +64,7 @@ export class ProjectService {
   }
 
   delete(id): Observable<any> {
-    return this.apiService.delete(this.PROJECT_PATH).pipe(map(
+    return this.apiService.delete(this.PROJECT_PATH +'/'+ id).pipe(map(
       res => {
         if (res) {
           return res;

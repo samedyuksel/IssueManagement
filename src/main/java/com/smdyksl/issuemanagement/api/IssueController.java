@@ -1,7 +1,9 @@
 package com.smdyksl.issuemanagement.api;
 
 
+import com.smdyksl.issuemanagement.dto.IssueDetailDto;
 import com.smdyksl.issuemanagement.dto.IssueDto;
+import com.smdyksl.issuemanagement.dto.IssueUpdateDto;
 import com.smdyksl.issuemanagement.dto.ProjectDto;
 import com.smdyksl.issuemanagement.entity.IssueStatus;
 import com.smdyksl.issuemanagement.service.impl.IssueServiceImpl;
@@ -20,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping(ApiPaths.IssueCtrl.CTRL)
 @Api(value = ApiPaths.ProjectCtrl.CTRL,description = "Issue APIs")
+@CrossOrigin
 public class IssueController {
 
     private final IssueServiceImpl issueServiceImpl;
@@ -42,6 +45,13 @@ public class IssueController {
         return ResponseEntity.ok(issueDto);
     }
 
+    @GetMapping("/detail/{id}")
+    @ApiOperation(value = "Get By Id Operation", response = IssueDto.class)
+    public ResponseEntity<IssueDetailDto> getByIdWithDetails(@PathVariable(value = "id", required = true) Long id) {
+        IssueDetailDto detailDto = issueServiceImpl.getByIdWithDetails(id);
+        return ResponseEntity.ok(detailDto);
+    }
+
     @PostMapping
     @ApiOperation(value = "Create Operation",response = IssueDto.class)
     public ResponseEntity<IssueDto> createIssue(@Valid @RequestBody IssueDto issue) {
@@ -50,9 +60,9 @@ public class IssueController {
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value = "Update Operation",response = IssueDto.class)
-    public ResponseEntity<IssueDto> updateIssue(@PathVariable(value = "id", required = true) Long id, @Valid @RequestBody IssueDto issue) {
-        return ResponseEntity.ok(issueServiceImpl.update(id, issue));
+    @ApiOperation(value = "Update Operation", response = IssueDto.class)
+    public ResponseEntity<IssueDetailDto> updateProject(@PathVariable(value = "id", required = true) Long id, @Valid @RequestBody IssueUpdateDto issue) {
+        return ResponseEntity.ok(issueServiceImpl.update(id,issue));
     }
 
     @DeleteMapping("/{id}")
@@ -65,6 +75,7 @@ public class IssueController {
     @GetMapping("/statuses")
     @ApiOperation(value = "Get All Issue Statuses Operation", response = String.class, responseContainer = "List")
     public ResponseEntity<List<IssueStatus>> getAll() {
+
         return ResponseEntity.ok(Arrays.asList(IssueStatus.values()));
     }
 }

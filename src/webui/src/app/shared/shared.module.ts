@@ -3,8 +3,8 @@ import {TranslateModule} from "@ngx-translate/core";
 import {BsModalRef, ModalModule} from "ngx-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
+import { ConfirmationComponent } from './confirmation/confirmation.component';
 
-// confirmation eklenecek
 
 @NgModule({
   imports: [
@@ -14,13 +14,14 @@ import {CommonModule} from "@angular/common";
   ],
   providers: [BsModalRef],
   declarations: [
-  ],
-  entryComponents: [
+  ConfirmationComponent],
+  entryComponents: [ConfirmationComponent
   ],
   exports: [
     TranslateModule,
     ModalModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ConfirmationComponent
   ]
 })
 export class SharedModule {
